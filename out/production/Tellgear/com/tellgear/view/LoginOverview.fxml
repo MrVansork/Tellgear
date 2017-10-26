@@ -17,7 +17,7 @@
             <Font name="Cambria" size="12.0" />
          </font>
       </CheckBox>
-      <Button layoutX="315.0" layoutY="321.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #212121;" text="Log In" textFill="#d3d3d3">
+      <Button layoutX="315.0" layoutY="321.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="31.0" prefWidth="94.0" styleClass="login" stylesheets="@styles/buttons.css" text="Log In" textFill="#d3d3d3">
          <font>
             <Font name="Cambria" size="16.0" />
          </font>

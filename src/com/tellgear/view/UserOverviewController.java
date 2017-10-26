@@ -70,7 +70,6 @@ public class UserOverviewController implements Initializable {
 
         user_box.getChildren().add(user_list);
         user_list.setItems(data);
-
     }
 
     @FXML
@@ -160,7 +159,7 @@ public class UserOverviewController implements Initializable {
         lbl.setWrapText(true);
         lbl.setPadding(new Insets(3, 3, 3, 3));
         lbl.setFont(msg_font);
-        lbl.setMaxWidth(chat_scroll.getPrefWidth()/6*5);
+        lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
         pane.getChildren().add(lbl);
 
         pane.applyCss();
@@ -170,7 +169,7 @@ public class UserOverviewController implements Initializable {
         chat_log.layout();
 
         pane.setLayoutY(size);
-        pane.setLayoutX((chat_scroll.getPrefWidth()/2)-(lbl.getWidth()/2));
+        pane.setLayoutX((chat_log.getPrefWidth()/2)-(lbl.getWidth()/2));
 
         size += pane.getPrefHeight()+8;
     }
@@ -184,14 +183,14 @@ public class UserOverviewController implements Initializable {
         nme.setTextFill(Color.valueOf(color));
         nme.setPadding(new Insets(3, 3, 3, 3));
         nme.setFont(name_font);
-        nme.setMaxWidth(chat_scroll.getPrefWidth()/6*3);
+        nme.setMaxWidth(chat_log.getPrefWidth()/6*3);
         pane.getChildren().add(nme);
 
         Label lbl = new Label(text);
         lbl.setWrapText(true);
         lbl.setPadding(new Insets(3, 3, 3, 3));
         lbl.setFont(msg_font);
-        lbl.setMaxWidth(chat_scroll.getPrefWidth()/6*5);
+        lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
         pane.getChildren().add(lbl);
 
         Label date = new Label(format.format(new Date()));
@@ -224,15 +223,16 @@ public class UserOverviewController implements Initializable {
     }
 
     public void consoleMe(String text){
+
         Pane pane = new Pane();
         chat_log.getChildren().add(pane);
-        pane.setStyle("-fx-background-color: #86e0fd; -fx-background-radius: 8; ");
+        pane.setStyle("-fx-background-color: #86e0fd; -fx-background-radius: 8;");
 
-        Label lbl = new Label(text);
+        Label lbl = new Label("       "+text);
         lbl.setPadding(new Insets(3, 3, 3, 3));
         lbl.setWrapText(true);
         lbl.setFont(msg_font);
-        lbl.setMaxWidth(chat_scroll.getPrefWidth()/6*5);
+        lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
         pane.getChildren().add(lbl);
 
         Label date = new Label(format.format(new Date()));
@@ -247,12 +247,13 @@ public class UserOverviewController implements Initializable {
         pane.applyCss();
         pane.layout();
 
-        lbl.setText("        "+text);
         pane.setPrefHeight(lbl.getHeight());
 
-        pane.setLayoutX(chat_log.getPrefWidth()-lbl.getWidth()-38);
+        pane.setLayoutX(chat_log.getPrefWidth()-lbl.getWidth()-8);
         pane.setLayoutY(size);
         size += lbl.getHeight()+8;
+
+        chat_scroll.setVvalue(1.0d);
     }
 
     public void setMainApp(MainApp main){

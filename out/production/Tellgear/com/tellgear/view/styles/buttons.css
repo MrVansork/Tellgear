@@ -1,0 +1,27 @@
+.login{
+	-fx-background-color: #212121;
+}
+
+.login:hover{
+	-fx-background-color: #414141;
+}
+
+.login:pressed{
+	-fx-background-color: #050505;
+}
+
+
+.message_panel{
+	-fx-background-color: #CCCCCC;
+	-fx-background-radius: 8;
+}
+
+.message_panel:hover{
+	-fx-background-color: #EEEEEE;
+	-fx-background-radius: 8;
+}
+
+.message_panel:pressed{
+	-fx-background-color: #AAAAAA;
+    -fx-background-radius: 8;
+}
