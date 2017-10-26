@@ -58,7 +58,10 @@ public class Client extends Thread{
 
                 else if(msg.type.equals("login")){
                     if(msg.content.equals("TRUE")){
-                        Platform.runLater(() -> loc.login());
+                        Platform.runLater(() -> {
+                            loc.login();
+                            uoc.show();
+                        });
                     }
                     else if(msg.content.equals("FALSE:BAD_LOGIN")){
                         Platform.runLater(() -> loc.showAdvise("Username or password was wrong", "general"));

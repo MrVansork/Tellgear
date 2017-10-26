@@ -3,6 +3,7 @@ package com.tellgear.view;
 import com.tellgear.MainApp;
 import com.tellgear.net.Message;
 import com.tellgear.util.Utilities;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -70,6 +70,12 @@ public class UserOverviewController implements Initializable {
 
         user_box.getChildren().add(user_list);
         user_list.setItems(data);
+
+
+    }
+
+    public void show(){
+        name.setText(USERNAME);
     }
 
     @FXML

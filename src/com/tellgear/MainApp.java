@@ -2,6 +2,7 @@ package com.tellgear;
 
 import com.tellgear.net.Client;
 import com.tellgear.net.Message;
+import com.tellgear.util.Constants;
 import com.tellgear.view.LoginOverviewController;
 import com.tellgear.view.SignUpOverviewController;
 import com.tellgear.view.UserOverviewController;
@@ -31,10 +32,10 @@ public class MainApp extends Application{
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Tell Gear");
         this.primaryStage.setResizable(false);
-        //this.primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("../../res/icon.png")));
+        this.primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("../../res/icon.png")));
 
         primaryStage.setOnCloseRequest(event -> {
-            if(client.connected){
+            if(client != null && client.connected){
                 client.send(new Message("message", UserOverviewController.USERNAME, "!!##quit", "SERVER"));
                 client.stop();
             }
@@ -47,13 +48,17 @@ public class MainApp extends Application{
      * Shows the person overview inside the root layout.
      */
     public void initLogin() {
+        LoginOverviewController loc = null;
+        SignUpOverviewController soc = null;
+        UserOverviewController uoc = null;
+
         try {
             // Load login overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/LoginOverview.fxml"));
             scenes.put("login", loader.load());
 
-            LoginOverviewController loc = loader.getController();
+            loc = loader.getController();
             loc.setMainApp(this);
 
             // Load signup overview.
@@ -61,7 +66,7 @@ public class MainApp extends Application{
             loader.setLocation(MainApp.class.getResource("view/SignUpOverview.fxml"));
             scenes.put("signup", loader.load());
 
-            SignUpOverviewController soc = loader.getController();
+            soc = loader.getController();
             soc.setMainApp(this);
 
             // Load user overview.
@@ -69,12 +74,8 @@ public class MainApp extends Application{
             loader.setLocation(MainApp.class.getResource("view/UserOverview.fxml"));
             scenes.put("user", loader.load());
 
-            UserOverviewController uoc = loader.getController();
+            uoc = loader.getController();
             uoc.setMainApp(this);
-            //Init socket client
-
-            client = new Client(loc, soc, loader.getController());
-            client.start();
 
             // Set person overview into the center of root layout.
             primaryStage.setScene(new Scene(scenes.get("login")));
@@ -83,6 +84,17 @@ public class MainApp extends Application{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //Init socket client
+
+        try {
+            client = new Client(loc, soc, uoc);
+            client.start();
+        } catch (IOException e) {
+            System.err.println("Can't connect with the server.\nServer IP: "+ Constants.SERVER_ADDR+"\nPort: "+Constants.PORT);
+            loc.showAdvise("Can't connect with the server", "general");
+        }
+
     }
 
     public void changeScene(String key){

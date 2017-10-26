@@ -34,11 +34,6 @@
       <Pane layoutX="537.0" prefHeight="108.0" prefWidth="200.0" style="-fx-background-color: #EAEAEA;">
          <children>
             <Label fx:id="name" layoutX="73.0" layoutY="27.0" prefHeight="25.0" prefWidth="91.0" />
-            <ImageView fx:id="avatar" fitHeight="64.0" fitWidth="64.0" layoutX="2.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../res/img/user.png" />
-               </image>
-            </ImageView>
             <Separator layoutY="70.0" prefHeight="0.0" prefWidth="200.0" />
             <Button fx:id="settings" layoutX="2.0" layoutY="73.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="32.0" prefWidth="32.0">
                <graphic>
@@ -49,6 +44,16 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="settings1" layoutX="46.0" layoutY="73.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="32.0" prefWidth="40.0">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0">
+                     <image>
+                        <Image url="@../../../res/img/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Pane layoutX="4.0" layoutY="4.0" prefHeight="64.0" prefWidth="64.0" style="-fx-background-radius: 16; -fx-background-color: #212121;" />
          </children></Pane>
       <AnchorPane layoutY="36.0" prefHeight="379.0" prefWidth="537.0">
          <children>

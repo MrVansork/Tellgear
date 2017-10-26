@@ -64,7 +64,6 @@ public class LoginOverviewController implements Initializable{
     public void login(){
         UserOverviewController.USERNAME = user.getText();
         main.changeScene("user");
-
     }
 
     public void setMainApp(MainApp main){
