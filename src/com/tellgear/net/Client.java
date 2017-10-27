@@ -13,9 +13,7 @@ import java.net.Socket;
 public class Client extends Thread{
 
     private Socket socket;
-    private boolean running = false;
-    public boolean connected = false;
-    private int ID = -1;
+    public boolean running = false, connected = false;
     private History history;
     public ObjectInputStream in;
     public ObjectOutputStream out;
@@ -93,6 +91,12 @@ public class Client extends Thread{
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

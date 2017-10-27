@@ -25,11 +25,12 @@ public class LoginOverviewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        user.setText("Adrian");
+        passwd.setText("12345");
     }
 
     @FXML
-    private void onLogin(){
+    public void onLogin(){
         String password = Utilities.crypt(passwd.getText());
         Message msg = new Message("login", user.getText(), password, "SERVER");
         main.client.send(msg);

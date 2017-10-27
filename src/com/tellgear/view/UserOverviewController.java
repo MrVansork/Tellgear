@@ -76,6 +76,7 @@ public class UserOverviewController implements Initializable {
 
     public void show(){
         name.setText(USERNAME);
+        consoleApp("Bienvenido al servidor");
     }
 
     @FXML
@@ -159,7 +160,7 @@ public class UserOverviewController implements Initializable {
     public void consoleApp(String text){
         Pane pane = new Pane();
         chat_log.getChildren().add(pane);
-        pane.setStyle("-fx-border-color: #bda132; -fx-background-color: #e7dcb1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
+        pane.setStyle("-fx-background-color: #f8ea72; -fx-background-radius: 8;");
 
         Label lbl = new Label(text);
         lbl.setWrapText(true);
@@ -168,16 +169,18 @@ public class UserOverviewController implements Initializable {
         lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
         pane.getChildren().add(lbl);
 
-        pane.applyCss();
-        pane.layout();
-
         chat_log.applyCss();
         chat_log.layout();
 
-        pane.setLayoutY(size);
-        pane.setLayoutX((chat_log.getPrefWidth()/2)-(lbl.getWidth()/2));
+        pane.applyCss();
+        pane.layout();
 
-        size += pane.getPrefHeight()+8;
+        pane.setPrefHeight(lbl.getHeight());
+        pane.setLayoutX(chat_log.getPrefWidth()-lbl.getWidth()-8);
+        pane.setLayoutY(size);
+
+
+        size += lbl.getHeight()+8;
     }
 
     public void consoleOther(String text, String name, String color){
@@ -229,7 +232,6 @@ public class UserOverviewController implements Initializable {
     }
 
     public void consoleMe(String text){
-
         Pane pane = new Pane();
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #86e0fd; -fx-background-radius: 8;");
@@ -247,11 +249,12 @@ public class UserOverviewController implements Initializable {
         date.setFont(date_font);
         pane.getChildren().add(date);
 
+        pane.applyCss();
+        pane.layout();
+
         chat_log.applyCss();
         chat_log.layout();
 
-        pane.applyCss();
-        pane.layout();
 
         pane.setPrefHeight(lbl.getHeight());
 

@@ -36,8 +36,8 @@ public class MainApp extends Application{
 
         primaryStage.setOnCloseRequest(event -> {
             if(client != null && client.connected){
+                client.running = false;
                 client.send(new Message("message", UserOverviewController.USERNAME, "!!##quit", "SERVER"));
-                client.stop();
             }
         });
 
@@ -90,6 +90,7 @@ public class MainApp extends Application{
         try {
             client = new Client(loc, soc, uoc);
             client.start();
+            loc.onLogin();
         } catch (IOException e) {
             System.err.println("Can't connect with the server.\nServer IP: "+ Constants.SERVER_ADDR+"\nPort: "+Constants.PORT);
             loc.showAdvise("Can't connect with the server", "general");
