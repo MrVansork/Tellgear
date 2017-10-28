@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="480.0" prefWidth="720.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tellgear.view.UserOverviewController">
+<AnchorPane prefHeight="490.0" prefWidth="720.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tellgear.view.UserOverviewController">
    <children>
       <TextArea fx:id="message" layoutX="50.0" layoutY="425.0" onKeyPressed="#onEnter" prefHeight="49.0" prefWidth="437.0" promptText="Message..." style="-fx-background-radius: 8; -fx-background-color: #FFFFFF; -fx-border: rgba(0,0,0,0);" wrapText="true" />
       <Button fx:id="send" layoutX="487.0" layoutY="425.0" mnemonicParsing="false" onAction="#onSend" prefHeight="49.0" prefWidth="49.0" styleClass="message_panel" stylesheets="@styles/buttons.css">
@@ -63,6 +63,10 @@
                </content>
             </ScrollPane>
          </children></AnchorPane>
-      <VBox fx:id="user_box" layoutX="537.0" layoutY="108.0" prefHeight="372.0" prefWidth="200.0" style="-fx-background-color: #BBB;" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="537.0" layoutY="108.0" prefHeight="382.0" prefWidth="200.0" vbarPolicy="NEVER">
+         <content>
+            <VBox fx:id="user_box" prefHeight="382.0" prefWidth="200.0" style="-fx-background-color: #BBB;" />
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

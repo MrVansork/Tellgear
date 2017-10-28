@@ -1,6 +1,7 @@
 package com.tellgear.view;
 
 import com.tellgear.MainApp;
+import com.tellgear.model.User;
 import com.tellgear.net.Message;
 import com.tellgear.util.Utilities;
 
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -51,9 +53,6 @@ public class UserOverviewController implements Initializable {
     private Font msg_font, name_font, date_font;
     @FXML
     private VBox user_box;
-    @FXML
-    ListView<String> user_list = new ListView<String>();
-    ObservableList<String> data = FXCollections.observableArrayList();
 
     private long size = 8;
     private DateFormat format = new SimpleDateFormat("HH:mm");
@@ -68,15 +67,10 @@ public class UserOverviewController implements Initializable {
         name_font = Font.font("Amble CN", FontWeight.BOLD, 14);
         chat_log.setPadding(new Insets(3, 3, 3, 3));
 
-        user_box.getChildren().add(user_list);
-        user_list.setItems(data);
-
-
     }
 
     public void show(){
         name.setText(USERNAME);
-        consoleApp("Bienvenido al servidor");
     }
 
     @FXML
@@ -134,27 +128,22 @@ public class UserOverviewController implements Initializable {
         message.setText("");
     }
 
-    public void addUser(String user){
-        if(!user.equals(UserOverviewController.USERNAME)){
-            boolean exists = false;
-            for(int i = 0; i < data.size(); i++){
-                if(data.get(i).equals(user)){
-                    exists = true;
-                    break;
-                }
-            }
-            if(!exists){ data.add(user); }
+    public void updateUsers(){
+        user_box.getChildren().removeAll(user_box.getChildren());
+        user_box.setPrefHeight(User.users.size()*48);
+        for(User user:User.users){
+            user_box.getChildren().add(user.getUserPane());
         }
     }
 
     public void removeUser(String user){
-        if(!user.equals(UserOverviewController.USERNAME)){
+        /*if(!user.equals(UserOverviewController.USERNAME)){
             for(int i = 0; i < data.size(); i++){
                 if(data.get(i).equals(user)){
                     data.remove(i);
                 }
             }
-        }
+        }*/
     }
 
     public void consoleApp(String text){
@@ -176,7 +165,7 @@ public class UserOverviewController implements Initializable {
         pane.layout();
 
         pane.setPrefHeight(lbl.getHeight());
-        pane.setLayoutX(chat_log.getPrefWidth()-lbl.getWidth()-8);
+        pane.setLayoutX(chat_log.getPrefWidth()/2-lbl.getWidth()/2);
         pane.setLayoutY(size);
 
 
@@ -228,6 +217,7 @@ public class UserOverviewController implements Initializable {
         pane.setLayoutY(size);
         pane.setLayoutX(4);
         size += pane.getPrefHeight()+8;
+
 
     }
 

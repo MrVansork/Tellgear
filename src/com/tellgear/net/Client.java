@@ -1,11 +1,13 @@
 package com.tellgear.net;
 
+import com.tellgear.model.User;
 import com.tellgear.util.Constants;
 import com.tellgear.util.Utilities;
 import com.tellgear.view.LoginOverviewController;
 import com.tellgear.view.SignUpOverviewController;
 import com.tellgear.view.UserOverviewController;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 
 import java.io.*;
 import java.net.Socket;
@@ -41,15 +43,16 @@ public class Client extends Thread{
         while(running){
             try {
                 Message msg = (Message) in.readObject();
+                //System.out.println("Input: "+msg.toString());
 
                 if(msg.type.equals("message")){
                     if(msg.sender.equals(UserOverviewController.USERNAME)){
                         Platform.runLater(() -> uoc.consoleMe(Utilities.decrypt(msg.content)));
                     }else{
                         if(msg.recipient.equals(UserOverviewController.USERNAME)){
-                            Platform.runLater(() -> uoc.consoleOther(Utilities.decrypt(msg.content), msg.sender, "#0075bf"));
+                            Platform.runLater(() -> uoc.consoleOther(Utilities.decrypt(msg.content), msg.sender, User.findUser(msg.sender).getColor()));
                         }else if(msg.recipient.equals("All")){
-                            Platform.runLater(() -> uoc.consoleOther(Utilities.decrypt(msg.content), msg.sender, "#0075bf"));
+                            Platform.runLater(() -> uoc.consoleOther(Utilities.decrypt(msg.content), msg.sender, User.findUser(msg.sender).getColor()));
                         }
                     }
                 }
@@ -71,7 +74,9 @@ public class Client extends Thread{
 
                 else if(msg.type.equals("signup")){
                     if(msg.content.equals("TRUE")){
-                        Platform.runLater(() -> soc.signUp());
+                        Platform.runLater(() -> {
+                            soc.signUp();
+                        });
                     }
                     else if(msg.content.equals("FALSE:EXISTS")){
                         Platform.runLater(() -> soc.showAdvise("That user already exists"));
@@ -82,7 +87,10 @@ public class Client extends Thread{
                 }
 
                 else if(msg.type.equals("newuser")){
-                    Platform.runLater(() -> uoc.addUser(msg.content));
+                    if(!User.exists(msg.content)){
+                        new User(msg.content, new Image(getClass().getResourceAsStream("../../../res/img/user.png")));
+                        Platform.runLater(() -> uoc.updateUsers());
+                    }
                 }
                 else if(msg.type.equals("signout")){
                     Platform.runLater(() -> uoc.removeUser(msg.content));
