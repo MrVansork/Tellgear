@@ -5,14 +5,11 @@ import com.tellgear.model.User;
 import com.tellgear.net.Message;
 import com.tellgear.util.Utilities;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -26,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -44,7 +42,7 @@ public class UserOverviewController implements Initializable {
     @FXML
     private AnchorPane chat_log;
     @FXML
-    private ScrollPane chat_scroll;
+    private ScrollPane chat_scroll, emojis_scroll;
     @FXML
     private Label name;
     @FXML
@@ -61,11 +59,17 @@ public class UserOverviewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-
         date_font = Font.font("Amble CN", FontWeight.LIGHT, 10);
         msg_font = Font.font("Amble CN", FontWeight.NORMAL, 14);
         name_font = Font.font("Amble CN", FontWeight.BOLD, 14);
         chat_log.setPadding(new Insets(3, 3, 3, 3));
+
+        emojis_scroll.setVisible(false);
+
+        double x = 0, y = 0;
+
+        File emoji_folder = new File(getClass().getResource("").getFile());
+
 
     }
 
@@ -92,7 +96,7 @@ public class UserOverviewController implements Initializable {
 
     @FXML
     public void onEmoji(){
-
+        emojis_scroll.setVisible(!emojis_scroll.isVisible());
     }
 
     @FXML
@@ -109,6 +113,7 @@ public class UserOverviewController implements Initializable {
 
     @FXML
     public void onEnter(KeyEvent ke){
+        User.findUser(USERNAME).setWriting(!message.getText().trim().equals(""));
         if(ke.isControlDown() && ke.getCode() == KeyCode.ENTER){
             message.appendText("\n");
             return;
@@ -126,6 +131,7 @@ public class UserOverviewController implements Initializable {
         Message msg = new Message("message", USERNAME, Utilities.crypt(message.getText()), "!!##ALL");
         main.client.send(msg);
         message.setText("");
+        User.findUser(USERNAME).setWriting(!message.getText().trim().equals(""));
     }
 
     public void updateUsers(){

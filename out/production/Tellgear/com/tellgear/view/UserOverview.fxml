@@ -68,5 +68,6 @@
             <VBox fx:id="user_box" prefHeight="382.0" prefWidth="200.0" style="-fx-background-color: #BBB;" />
          </content>
       </ScrollPane>
+      <ScrollPane fx:id="emojis_scroll" hbarPolicy="NEVER" layoutY="287.0" opacity="0.7" prefHeight="128.0" prefWidth="537.0" stylesheets="@styles/scrollbar.css" vbarPolicy="ALWAYS" />
    </children>
 </AnchorPane>

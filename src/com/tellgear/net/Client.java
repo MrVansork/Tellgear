@@ -43,7 +43,6 @@ public class Client extends Thread{
         while(running){
             try {
                 Message msg = (Message) in.readObject();
-                //System.out.println("Input: "+msg.toString());
 
                 if(msg.type.equals("message")){
                     if(msg.sender.equals(UserOverviewController.USERNAME)){
@@ -89,11 +88,17 @@ public class Client extends Thread{
                 else if(msg.type.equals("newuser")){
                     if(!User.exists(msg.content)){
                         new User(msg.content, new Image(getClass().getResourceAsStream("../../../res/img/user.png")));
-                        Platform.runLater(() -> uoc.updateUsers());
+                        Platform.runLater(() -> {
+                            uoc.updateUsers();
+                        });
                     }
                 }
                 else if(msg.type.equals("signout")){
-                    Platform.runLater(() -> uoc.removeUser(msg.content));
+                    Platform.runLater(() -> {
+                        uoc.removeUser(msg.content);
+                        if(!msg.content.equals(UserOverviewController.USERNAME))
+                            uoc.consoleApp(msg.content+" se ha desconectado");
+                    });
                 }
 
             } catch (IOException | ClassNotFoundException e) {
