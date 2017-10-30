@@ -1,7 +1,24 @@
-.scroll-bar:horizontal, .scroll-bar:vertical{
+.scroll_bar{
+    -fx-background-color: #FFFFFF;
+}
+
+.scroll_bar:horizontal, .scroll-bar:vertical{
     -fx-background-color: transparent;
 }
 
-.scroll-bar:vertical .thumb{
+.scroll_bar:vertical .thumb{
 	-fx-background-color: #212121;
+}
+
+
+.emoji_bar{
+    -fx-background-color: #FFFFFF;
+}
+
+.emoji_bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: transparent;
+}
+
+.emoji_bar:vertical .thumb{
+	-fx-background-color: #429eec;
 }

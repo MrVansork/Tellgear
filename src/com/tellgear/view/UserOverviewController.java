@@ -1,8 +1,10 @@
 package com.tellgear.view;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.tellgear.MainApp;
 import com.tellgear.model.User;
 import com.tellgear.net.Message;
+import com.tellgear.util.Constants;
 import com.tellgear.util.Utilities;
 
 import javafx.event.ActionEvent;
@@ -12,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -23,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -51,6 +55,8 @@ public class UserOverviewController implements Initializable {
     private Font msg_font, name_font, date_font;
     @FXML
     private VBox user_box;
+    @FXML
+    private AnchorPane emoji_pane;
 
     private long size = 8;
     private DateFormat format = new SimpleDateFormat("HH:mm");
@@ -68,8 +74,28 @@ public class UserOverviewController implements Initializable {
 
         double x = 0, y = 0;
 
-        File emoji_folder = new File(getClass().getResource("").getFile());
+        for(String key: Constants.EMOJIS.keySet()){
+            ImageView emote_img = new ImageView(Constants.EMOJIS.get(key));
+            emote_img.setFitWidth(32);
+            emote_img.setFitHeight(32);
 
+            Button emote = new Button("", emote_img);
+            emote.setTooltip(new Tooltip(key));
+            emote.getStyleClass().add("emote");
+            emote.getStylesheets().add(getClass().getResource("styles/buttons.css").toExternalForm());
+            emote.setPadding(new Insets(0, 0, 0, 0));
+            emote.setPrefSize(38, 38);
+            emote.setLayoutX(x);
+            emote.setLayoutY(y);
+            emote.setFocusTraversable(false);
+
+            x+=38;
+            if(x+38 >= emoji_pane.getPrefWidth()){
+                x = 0;
+                y+=38;
+            }
+            emoji_pane.getChildren().add(emote);
+        }
 
     }
 
@@ -114,6 +140,8 @@ public class UserOverviewController implements Initializable {
     @FXML
     public void onEnter(KeyEvent ke){
         User.findUser(USERNAME).setWriting(!message.getText().trim().equals(""));
+        emojis_scroll.setVisible(false);
+
         if(ke.isControlDown() && ke.getCode() == KeyCode.ENTER){
             message.appendText("\n");
             return;

@@ -1,10 +1,13 @@
 package com.tellgear.util;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -55,6 +58,19 @@ public class Utilities {
         return base64EncryptedString;
     }
 
+    public static void loadEmojis(){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(Utilities.class.getResource("../../../res/img/emoji/emoji.cnf").getFile()));
 
+            String line;
+            while((line=br.readLine()) != null){
+                Constants.EMOJIS.put(line.split("=")[0], new Image(Utilities.class.getResource("../../../res/img/emoji/"+line.split("=")[1]).toExternalForm()));
+            }
+
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

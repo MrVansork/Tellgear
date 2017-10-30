@@ -3,6 +3,7 @@ package com.tellgear;
 import com.tellgear.net.Client;
 import com.tellgear.net.Message;
 import com.tellgear.util.Constants;
+import com.tellgear.util.Utilities;
 import com.tellgear.view.LoginOverviewController;
 import com.tellgear.view.SignUpOverviewController;
 import com.tellgear.view.UserOverviewController;
@@ -41,6 +42,7 @@ public class MainApp extends Application{
             }
         });
 
+        Utilities.loadEmojis();
         initLogin();
     }
 

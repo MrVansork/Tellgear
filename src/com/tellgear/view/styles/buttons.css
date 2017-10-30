@@ -25,3 +25,15 @@
 	-fx-background-color: #AAAAAA;
     -fx-background-radius: 8;
 }
+
+.emote{
+    -fx-background-color: #FFFFFF;
+}
+
+.emote:hover{
+    -fx-background-color: #E0E0E0;
+}
+
+.emote:pressed{
+    -fx-background-color: #AAAAAA;
+}
