@@ -1,20 +1,22 @@
 package com.tellgear.view;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.tellgear.MainApp;
+import com.tellgear.model.EmotedPane;
 import com.tellgear.model.User;
 import com.tellgear.net.Message;
 import com.tellgear.util.Constants;
 import com.tellgear.util.Utilities;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,9 +27,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -101,6 +102,12 @@ public class UserOverviewController implements Initializable {
 
     public void show(){
         name.setText(USERNAME);
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50), event -> {
+            consoleApp("caca&happy&&happy&&happy& se ha conetado");
+            System.out.println("DONE");
+        }));
+        timeline.play();
     }
 
     @FXML
@@ -132,14 +139,21 @@ public class UserOverviewController implements Initializable {
             return;
         }
 
-        Message msg = new Message("message", USERNAME, Utilities.crypt(message.getText()), "!!##all");
+        emojis_scroll.setVisible(false);
+
+        Message msg = new Message("message", USERNAME, Utilities.crypt(message.getText()), "!!##ALL");
         main.client.send(msg);
         message.setText("");
+        if(User.findUser(USERNAME).isWriting() == message.getText().trim().equals(""))
+            main.client.send(new Message("writing", USERNAME, Utilities.crypt(!message.getText().trim().equals("")+""), "!!##ALL"));
+
     }
 
     @FXML
     public void onEnter(KeyEvent ke){
-        User.findUser(USERNAME).setWriting(!message.getText().trim().equals(""));
+        if(User.findUser(USERNAME).isWriting() == message.getText().trim().equals(""))
+            main.client.send(new Message("writing", USERNAME, Utilities.crypt(!message.getText().trim().equals("")+""), "!!##ALL"));
+
         emojis_scroll.setVisible(false);
 
         if(ke.isControlDown() && ke.getCode() == KeyCode.ENTER){
@@ -148,7 +162,6 @@ public class UserOverviewController implements Initializable {
         }
         if(ke.getCode() != KeyCode.ENTER)
             return;
-
         ke.consume();
 
         if(message.getText().trim().equals("")) {
@@ -159,7 +172,9 @@ public class UserOverviewController implements Initializable {
         Message msg = new Message("message", USERNAME, Utilities.crypt(message.getText()), "!!##ALL");
         main.client.send(msg);
         message.setText("");
-        User.findUser(USERNAME).setWriting(!message.getText().trim().equals(""));
+        if(User.findUser(USERNAME).isWriting() == message.getText().trim().equals(""))
+            main.client.send(new Message("writing", USERNAME, Utilities.crypt(!message.getText().trim().equals("")+""), "!!##ALL"));
+
     }
 
     public void updateUsers(){
@@ -171,13 +186,10 @@ public class UserOverviewController implements Initializable {
     }
 
     public void removeUser(String user){
-        /*if(!user.equals(UserOverviewController.USERNAME)){
-            for(int i = 0; i < data.size(); i++){
-                if(data.get(i).equals(user)){
-                    data.remove(i);
-                }
-            }
-        }*/
+        if(!user.equals(UserOverviewController.USERNAME)){
+            user_box.getChildren().remove(User.findUser(user));
+            User.users.remove(User.findUser(user));
+        }
     }
 
     public void consoleApp(String text){
@@ -185,12 +197,15 @@ public class UserOverviewController implements Initializable {
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #f8ea72; -fx-background-radius: 8;");
 
-        Label lbl = new Label(text);
+        /*Label lbl = new Label(text);
         lbl.setWrapText(true);
         lbl.setPadding(new Insets(3, 3, 3, 3));
         lbl.setFont(msg_font);
         lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(lbl);
+        pane.getChildren().add(lbl);*/
+
+        EmotedPane emotedPane = new EmotedPane(text);
+        pane.getChildren().add(emotedPane);
 
         chat_log.applyCss();
         chat_log.layout();
@@ -198,12 +213,12 @@ public class UserOverviewController implements Initializable {
         pane.applyCss();
         pane.layout();
 
-        pane.setPrefHeight(lbl.getHeight());
-        pane.setLayoutX(chat_log.getPrefWidth()/2-lbl.getWidth()/2);
+        pane.setPrefHeight(emotedPane.getHeight());
+        pane.setLayoutX(chat_log.getPrefWidth()/2-emotedPane.getWidth()/2);
         pane.setLayoutY(size);
 
 
-        size += lbl.getHeight()+8;
+        size += emotedPane.getHeight()+8;
     }
 
     public void consoleOther(String text, String name, String color){
@@ -260,7 +275,7 @@ public class UserOverviewController implements Initializable {
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #86e0fd; -fx-background-radius: 8;");
 
-        Label lbl = new Label("       "+text);
+        Label lbl = new Label("\t"+text);
         lbl.setPadding(new Insets(3, 3, 3, 3));
         lbl.setWrapText(true);
         lbl.setFont(msg_font);

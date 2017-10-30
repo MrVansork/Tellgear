@@ -8,19 +8,19 @@
 
 <AnchorPane prefHeight="490.0" prefWidth="720.0" style="-fx-background-color: #EAEAEA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tellgear.view.UserOverviewController">
    <children>
-      <TextArea fx:id="message" layoutX="50.0" layoutY="425.0" onKeyPressed="#onEnter" prefHeight="49.0" prefWidth="437.0" promptText="Message..." style="-fx-background-radius: 8; -fx-background-color: #FFFFFF; -fx-border: rgba(0,0,0,0);" wrapText="true" />
-      <Button fx:id="send" layoutX="487.0" layoutY="425.0" mnemonicParsing="false" onAction="#onSend" prefHeight="49.0" prefWidth="49.0" styleClass="message_panel" stylesheets="@styles/buttons.css">
+      <TextArea fx:id="message" layoutX="50.0" layoutY="416.0" onKeyPressed="#onEnter" prefHeight="73.0" prefWidth="428.0" promptText="Message..." style="-fx-background-radius: 0; -fx-background-color: #FFFFFF; -fx-border: rgba(0,0,0,0);" wrapText="true" />
+      <Button layoutX="478.0" layoutY="428.0" mnemonicParsing="false" onAction="#onSend" prefHeight="49.0" prefWidth="49.0" style="-fx-background-radius: 0;" styleClass="message_panel" stylesheets="@styles/buttons.css">
          <graphic>
-            <ImageView fitHeight="32.0" fitWidth="32.0">
+            <ImageView fitHeight="24.0" fitWidth="24.0">
                <image>
                   <Image url="@../../../res/img/send-button.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="emoji" focusTraversable="false" layoutX="1.0" layoutY="425.0" mnemonicParsing="false" onAction="#onEmoji" prefHeight="49.0" prefWidth="49.0" styleClass="message_panel" stylesheets="@styles/buttons.css">
+      <Button focusTraversable="false" layoutX="10.0" layoutY="415.0" mnemonicParsing="false" onAction="#onEmoji" prefHeight="32.0" prefWidth="40.0" style="-fx-background-radius: 0;" styleClass="message_panel" stylesheets="@styles/buttons.css">
          <graphic>
-            <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true">
+            <ImageView fitHeight="24.0" fitWidth="24.0" focusTraversable="true">
                <image>
                   <Image url="@../../../res/img/emoji.png" />
                </image>
@@ -72,5 +72,14 @@
          <content>
             <AnchorPane fx:id="emoji_pane" prefHeight="127.0" prefWidth="512.0" />
          </content></ScrollPane>
+      <Button focusTraversable="false" layoutX="10.0" layoutY="457.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="40.0" style="-fx-background-radius: 0;" styleClass="message_panel" stylesheets="@styles/buttons.css">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" focusTraversable="true">
+               <image>
+                  <Image url="@../../../res/img/clip.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

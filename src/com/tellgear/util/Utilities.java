@@ -1,7 +1,6 @@
 package com.tellgear.util;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
