@@ -90,6 +90,7 @@ public class UserOverviewController implements Initializable {
             emote.setLayoutY(y);
             emote.setFocusTraversable(false);
 
+            emote.setOnAction(event -> message.appendText(key));
             x+=38;
             if(x+38 >= emoji_pane.getPrefWidth()){
                 x = 0;
@@ -286,9 +287,7 @@ public class UserOverviewController implements Initializable {
         pane.applyCss();
         pane.layout();
 
-        chat_log.applyCss();
-        chat_log.layout();
-
+        System.out.println(emotedPane.getHeight());
         pane.setPrefHeight(emotedPane.getHeight());
 
         pane.setLayoutX(chat_log.getPrefWidth()-emotedPane.getWidth()-8);

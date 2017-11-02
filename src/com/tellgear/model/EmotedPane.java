@@ -1,18 +1,17 @@
 package com.tellgear.model;
 
 import com.tellgear.util.Constants;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class EmotedPane extends Pane {
 
     private String text;
-    private int x = 0, y = 0;
-    private boolean first = true;
-
     private Font font;
 
     public EmotedPane(String text){
@@ -25,50 +24,36 @@ public class EmotedPane extends Pane {
 
     private void checkText(String text){
         String aux = getAuxText(text);
-        int num_lbls = aux.split("!!##EMOTE##!!").length;
-        if(getNumOfEmotes(text) > 0){
-            for(int i = 0; i < num_lbls; i++){
-                addText(aux.split("!!##EMOTE##!!")[i]);
-                addEmote(text.split("prueba de texto con | en label personalizado")[1]);
+        addText(aux.replaceAll("!!##EMOTE##!!", "\t"));
+        double x = 0, y = 0;
+        for(int i = 0; i < getNumOfEmotes(text); i++){
+            x+= getWidthOfText(aux.split("!!##EMOTE##!!")[i])+4;
+            if(x>getMaxWidth()){
+                x = 0;
+                y+= 28;
             }
-        }else{
-            addText(text);
+            addEmote(text.split(aux.split("!!##EMOTE##!!")[i]+"|"+aux.split("!!##EMOTE##!!")[i+1])[1], x,y);
         }
+
     }
 
     private void addText(String text){
         Label label = new Label(text);
+        label.setMaxWidth(getMaxWidth());
         label.setWrapText(true);
         getChildren().add(label);
         label.setFont(font);
+        label.setPadding(new Insets(3, 3, 3, 3));
 
         applyCss();
         layout();
-
-        if(!first){
-            if(x+label.getWidth() >= getMaxWidth()){
-                y+=28;
-                x = 0;
-            }else{
-                x += label.getWidth();
-            }
-        }
-
-        label.setLayoutX(x);
-        label.setLayoutY(y);
-        first = false;
     }
 
-    private void addEmote(String code){
+    private void addEmote(String code, double x, double y){
         ImageView emote = new ImageView(Constants.EMOJIS.get(code));
         getChildren().add(emote);
         emote.setFitWidth(24);
         emote.setFitHeight(24);
-
-        if(x+24 >= getMaxWidth()){
-            y += 28;
-            x = 0;
-        }
 
         emote.setLayoutX(x);
         emote.setLayoutY(y);
@@ -93,6 +78,13 @@ public class EmotedPane extends Pane {
                 result++;
         }
         return result;
+    }
+
+    private double getWidthOfText(String text){
+        Text label = new Text(text);
+        label.setFont(font);
+        label.applyCss();
+        return label.getLayoutBounds().getWidth();
     }
 
 }
