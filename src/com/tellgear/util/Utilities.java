@@ -59,7 +59,7 @@ public class Utilities {
 
     public static void loadEmojis(){
         try {
-            BufferedReader br = new BufferedReader(new FileReader(Utilities.class.getResource("../../../res/img/emoji/emoji.cnf").getFile()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(Utilities.class.getResourceAsStream("../../../res/img/emoji/emoji.cnf")));
 
             String line;
             while((line=br.readLine()) != null){

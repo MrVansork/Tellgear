@@ -8,15 +8,11 @@ import com.tellgear.view.LoginOverviewController;
 import com.tellgear.view.SignUpOverviewController;
 import com.tellgear.view.UserOverviewController;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,7 +29,13 @@ public class MainApp extends Application{
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Tell Gear");
         this.primaryStage.setResizable(false);
-        this.primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("../../res/icon.png")));
+        try {
+            this.primaryStage.getIcons().add(new Image(getClass().getResource("../../res/icon.png").openStream()));
+        } catch (IOException e) {
+            System.err.println("\n----");
+            e.printStackTrace();
+            System.err.println("----\n");
+        }
 
         primaryStage.setOnCloseRequest(event -> {
             if(client != null && client.connected){

@@ -104,8 +104,7 @@ public class UserOverviewController implements Initializable {
         name.setText(USERNAME);
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50), event -> {
-            consoleApp("caca&happy&&happy&&happy& se ha conetado");
-            System.out.println("DONE");
+            consoleApp("prueba de texto con &happy& en label personalizado");
         }));
         timeline.play();
     }
@@ -197,15 +196,12 @@ public class UserOverviewController implements Initializable {
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #f8ea72; -fx-background-radius: 8;");
 
-        /*Label lbl = new Label(text);
-        lbl.setWrapText(true);
-        lbl.setPadding(new Insets(3, 3, 3, 3));
-        lbl.setFont(msg_font);
-        lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(lbl);*/
-
         EmotedPane emotedPane = new EmotedPane(text);
+        emotedPane.setMaxWidth(chat_log.getPrefWidth()/6*5);
         pane.getChildren().add(emotedPane);
+        emotedPane.addFont(msg_font);
+        emotedPane.init();
+        emotedPane.setPadding(new Insets(3, 3, 3, 3));
 
         chat_log.applyCss();
         chat_log.layout();
@@ -216,7 +212,6 @@ public class UserOverviewController implements Initializable {
         pane.setPrefHeight(emotedPane.getHeight());
         pane.setLayoutX(chat_log.getPrefWidth()/2-emotedPane.getWidth()/2);
         pane.setLayoutY(size);
-
 
         size += emotedPane.getHeight()+8;
     }
@@ -233,12 +228,12 @@ public class UserOverviewController implements Initializable {
         nme.setMaxWidth(chat_log.getPrefWidth()/6*3);
         pane.getChildren().add(nme);
 
-        Label lbl = new Label(text);
-        lbl.setWrapText(true);
-        lbl.setPadding(new Insets(3, 3, 3, 3));
-        lbl.setFont(msg_font);
-        lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(lbl);
+        EmotedPane emotedPane = new EmotedPane(text);
+        emotedPane.setMaxWidth(chat_log.getPrefWidth()/6*5);
+        pane.getChildren().add(emotedPane);
+        emotedPane.addFont(msg_font);
+        emotedPane.init();
+        emotedPane.setPadding(new Insets(3, 3, 3, 3));
 
         Label date = new Label(format.format(new Date()));
         date.setTextFill(Color.GRAY);
@@ -252,8 +247,8 @@ public class UserOverviewController implements Initializable {
         pane.applyCss();
         pane.layout();
 
-        lbl.setLayoutY(nme.getHeight()-4);
-        pane.setPrefHeight(lbl.getHeight()+nme.getHeight());
+        emotedPane.setLayoutY(nme.getHeight()-4);
+        pane.setPrefHeight(emotedPane.getHeight()+nme.getHeight());
 
         if(pane.getWidth() < nme.getWidth()+date.getWidth()+16)
             pane.setPrefWidth(nme.getWidth()+date.getWidth()+16);
@@ -275,12 +270,12 @@ public class UserOverviewController implements Initializable {
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #86e0fd; -fx-background-radius: 8;");
 
-        Label lbl = new Label("\t"+text);
-        lbl.setPadding(new Insets(3, 3, 3, 3));
-        lbl.setWrapText(true);
-        lbl.setFont(msg_font);
-        lbl.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(lbl);
+        EmotedPane emotedPane = new EmotedPane("\t"+text);
+        emotedPane.setMaxWidth(chat_log.getPrefWidth()/6*5);
+        pane.getChildren().add(emotedPane);
+        emotedPane.addFont(msg_font);
+        emotedPane.init();
+        emotedPane.setPadding(new Insets(3, 3, 3, 3));
 
         Label date = new Label(format.format(new Date()));
         date.setTextFill(Color.valueOf("#515151"));
@@ -294,12 +289,11 @@ public class UserOverviewController implements Initializable {
         chat_log.applyCss();
         chat_log.layout();
 
+        pane.setPrefHeight(emotedPane.getHeight());
 
-        pane.setPrefHeight(lbl.getHeight());
-
-        pane.setLayoutX(chat_log.getPrefWidth()-lbl.getWidth()-8);
+        pane.setLayoutX(chat_log.getPrefWidth()-emotedPane.getWidth()-8);
         pane.setLayoutY(size);
-        size += lbl.getHeight()+8;
+        size += emotedPane.getHeight()+8;
 
         chat_scroll.setVvalue(1.0d);
     }
