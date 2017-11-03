@@ -104,9 +104,7 @@ public class UserOverviewController implements Initializable {
     public void show(){
         name.setText(USERNAME);
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50), event -> {
-            consoleApp("prueba de texto con &happy& en label personalizado");
-        }));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50), event -> consoleApp("Bienvenido al servidor")));
         timeline.play();
     }
 
@@ -129,7 +127,7 @@ public class UserOverviewController implements Initializable {
 
     @FXML
     public void onEmoji(){
-        emojis_scroll.setVisible(!emojis_scroll.isVisible());
+        //emojis_scroll.setVisible(!emojis_scroll.isVisible());
     }
 
     @FXML
@@ -197,24 +195,21 @@ public class UserOverviewController implements Initializable {
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #f8ea72; -fx-background-radius: 8;");
 
-        EmotedPane emotedPane = new EmotedPane(text);
-        emotedPane.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(emotedPane);
-        emotedPane.addFont(msg_font);
-        emotedPane.init();
-        emotedPane.setPadding(new Insets(3, 3, 3, 3));
-
-        chat_log.applyCss();
-        chat_log.layout();
+        Label label = new Label(text);
+        label.setWrapText(true);
+        label.setMaxWidth(chat_log.getPrefWidth()/6*5);
+        pane.getChildren().add(label);
+        label.setFont(msg_font);
+        label.setPadding(new Insets(3, 3, 3, 3));
 
         pane.applyCss();
         pane.layout();
 
-        pane.setPrefHeight(emotedPane.getHeight());
-        pane.setLayoutX(chat_log.getPrefWidth()/2-emotedPane.getWidth()/2);
+        pane.setPrefHeight(label.getHeight());
+        pane.setLayoutX(chat_log.getPrefWidth()/2-label.getWidth()/2);
         pane.setLayoutY(size);
 
-        size += emotedPane.getHeight()+8;
+        size += label.getHeight()+8;
     }
 
     public void consoleOther(String text, String name, String color){
@@ -229,12 +224,12 @@ public class UserOverviewController implements Initializable {
         nme.setMaxWidth(chat_log.getPrefWidth()/6*3);
         pane.getChildren().add(nme);
 
-        EmotedPane emotedPane = new EmotedPane(text);
-        emotedPane.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(emotedPane);
-        emotedPane.addFont(msg_font);
-        emotedPane.init();
-        emotedPane.setPadding(new Insets(3, 3, 3, 3));
+        Label label = new Label(text);
+        label.setWrapText(true);
+        label.setMaxWidth(chat_log.getPrefWidth()/6*5);
+        pane.getChildren().add(label);
+        label.setFont(msg_font);
+        label.setPadding(new Insets(3, 3, 3, 3));
 
         Label date = new Label(format.format(new Date()));
         date.setTextFill(Color.GRAY);
@@ -248,8 +243,8 @@ public class UserOverviewController implements Initializable {
         pane.applyCss();
         pane.layout();
 
-        emotedPane.setLayoutY(nme.getHeight()-4);
-        pane.setPrefHeight(emotedPane.getHeight()+nme.getHeight());
+        label.setLayoutY(nme.getHeight()-4);
+        pane.setPrefHeight(label.getHeight()+nme.getHeight());
 
         if(pane.getWidth() < nme.getWidth()+date.getWidth()+16)
             pane.setPrefWidth(nme.getWidth()+date.getWidth()+16);
@@ -271,12 +266,12 @@ public class UserOverviewController implements Initializable {
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #86e0fd; -fx-background-radius: 8;");
 
-        EmotedPane emotedPane = new EmotedPane("\t"+text);
-        emotedPane.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(emotedPane);
-        emotedPane.addFont(msg_font);
-        emotedPane.init();
-        emotedPane.setPadding(new Insets(3, 3, 3, 3));
+        Label label = new Label("\t"+text);
+        label.setWrapText(true);
+        label.setMaxWidth(chat_log.getPrefWidth()/6*5);
+        pane.getChildren().add(label);
+        label.setFont(msg_font);
+        label.setPadding(new Insets(3, 3, 3, 3));
 
         Label date = new Label(format.format(new Date()));
         date.setTextFill(Color.valueOf("#515151"));
@@ -287,12 +282,12 @@ public class UserOverviewController implements Initializable {
         pane.applyCss();
         pane.layout();
 
-        System.out.println(emotedPane.getHeight());
-        pane.setPrefHeight(emotedPane.getHeight());
+        System.out.println(label.getHeight());
+        pane.setPrefHeight(label.getHeight());
 
-        pane.setLayoutX(chat_log.getPrefWidth()-emotedPane.getWidth()-8);
+        pane.setLayoutX(chat_log.getPrefWidth()-label.getWidth()-8);
         pane.setLayoutY(size);
-        size += emotedPane.getHeight()+8;
+        size += label.getHeight()+8;
 
         chat_scroll.setVvalue(1.0d);
     }

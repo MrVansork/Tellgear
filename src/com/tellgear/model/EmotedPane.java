@@ -24,15 +24,18 @@ public class EmotedPane extends Pane {
 
     private void checkText(String text){
         String aux = getAuxText(text);
-        addText(aux.replaceAll("!!##EMOTE##!!", "\t"));
+        addText(aux.replaceAll("!!##EMOTE##!!",  "\t"));
         double x = 0, y = 0;
+        System.out.println("NUM: "+getNumOfEmotes(text));
         for(int i = 0; i < getNumOfEmotes(text); i++){
-            x+= getWidthOfText(aux.split("!!##EMOTE##!!")[i])+4;
+            x+= getWidthOfText(aux.split("!!##EMOTE##!!")[i])+6;
             if(x>getMaxWidth()){
                 x = 0;
-                y+= 28;
+                y+= 32;
             }
-            addEmote(text.split(aux.split("!!##EMOTE##!!")[i]+"|"+aux.split("!!##EMOTE##!!")[i+1])[1], x,y);
+            String code = text.split(aux.split("!!##EMOTE##!!")[i]+"|"+aux.split("!!##EMOTE##!!")[i+1])[1];
+            addEmote(code, x, y);
+            x+=24;
         }
 
     }
@@ -54,7 +57,6 @@ public class EmotedPane extends Pane {
         getChildren().add(emote);
         emote.setFitWidth(24);
         emote.setFitHeight(24);
-
         emote.setLayoutX(x);
         emote.setLayoutY(y);
     }
@@ -66,7 +68,7 @@ public class EmotedPane extends Pane {
     private String getAuxText(String text){
         String aux = text;
         for(String code:Constants.EMOJIS.keySet()){
-            aux = aux.replace(code, "!!##EMOTE##!!");
+            aux = aux.replaceAll(code, "!!##EMOTE##!!");
         }
         return aux;
     }
@@ -75,7 +77,7 @@ public class EmotedPane extends Pane {
         int result = 0;
         for(String key:Constants.EMOJIS.keySet()){
             if(text.contains(key))
-                result++;
+                result+=text.split(key).length-1;
         }
         return result;
     }
