@@ -8,9 +8,14 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Utilities {
+
+    private static final DateFormat format = new SimpleDateFormat("HH:mm");
 
     public static String crypt(String text){
         String base64EncryptedString = "";
@@ -70,6 +75,10 @@ public class Utilities {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getDate(){
+        return format.format(new Date());
     }
 
 }

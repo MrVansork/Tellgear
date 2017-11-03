@@ -2,6 +2,7 @@ package com.tellgear.view;
 
 import com.tellgear.MainApp;
 import com.tellgear.model.EmotedPane;
+import com.tellgear.model.LogMessage;
 import com.tellgear.model.User;
 import com.tellgear.net.Message;
 import com.tellgear.util.Constants;
@@ -53,24 +54,16 @@ public class UserOverviewController implements Initializable {
     @FXML
     private ImageView avatar;
     @FXML
-    private Font msg_font, name_font, date_font;
-    @FXML
     private VBox user_box;
     @FXML
     private AnchorPane emoji_pane;
 
     private long size = 8;
-    private DateFormat format = new SimpleDateFormat("HH:mm");
-
     private MainApp main;
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        date_font = Font.font("Amble CN", FontWeight.LIGHT, 10);
-        msg_font = Font.font("Amble CN", FontWeight.NORMAL, 14);
-        name_font = Font.font("Amble CN", FontWeight.BOLD, 14);
         chat_log.setPadding(new Insets(3, 3, 3, 3));
-
         emojis_scroll.setVisible(false);
 
         double x = 0, y = 0;
@@ -212,8 +205,8 @@ public class UserOverviewController implements Initializable {
         size += label.getHeight()+8;
     }
 
-    public void consoleOther(String text, String name, String color){
-        Pane pane = new Pane();
+    public void consoleOther(Message message){
+        /*Pane pane = new Pane();
         chat_log.getChildren().add(pane);
         pane.setStyle("-fx-background-color: #eaeaea; -fx-background-radius: 8;");
 
@@ -241,7 +234,10 @@ public class UserOverviewController implements Initializable {
         chat_log.layout();
 
         pane.applyCss();
-        pane.layout();
+        pane.layout();*/
+
+        LogMessage logMessage = new LogMessage(message);
+        logMessage.show(chat_log);
 
         label.setLayoutY(nme.getHeight()-4);
         pane.setPrefHeight(label.getHeight()+nme.getHeight());
