@@ -184,108 +184,16 @@ public class UserOverviewController implements Initializable {
     }
 
     public void consoleApp(String text){
-        Pane pane = new Pane();
-        chat_log.getChildren().add(pane);
-        pane.setStyle("-fx-background-color: #f8ea72; -fx-background-radius: 8;");
-
-        Label label = new Label(text);
-        label.setWrapText(true);
-        label.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(label);
-        label.setFont(msg_font);
-        label.setPadding(new Insets(3, 3, 3, 3));
-
-        pane.applyCss();
-        pane.layout();
-
-        pane.setPrefHeight(label.getHeight());
-        pane.setLayoutX(chat_log.getPrefWidth()/2-label.getWidth()/2);
-        pane.setLayoutY(size);
-
-        size += label.getHeight()+8;
     }
 
     public void consoleOther(Message message){
-        /*Pane pane = new Pane();
-        chat_log.getChildren().add(pane);
-        pane.setStyle("-fx-background-color: #eaeaea; -fx-background-radius: 8;");
-
-        Label nme = new Label(name);
-        nme.setTextFill(Color.valueOf(color));
-        nme.setPadding(new Insets(3, 3, 3, 3));
-        nme.setFont(name_font);
-        nme.setMaxWidth(chat_log.getPrefWidth()/6*3);
-        pane.getChildren().add(nme);
-
-        Label label = new Label(text);
-        label.setWrapText(true);
-        label.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(label);
-        label.setFont(msg_font);
-        label.setPadding(new Insets(3, 3, 3, 3));
-
-        Label date = new Label(format.format(new Date()));
-        date.setTextFill(Color.GRAY);
-        date.setPadding(new Insets(3, 3, 3, 3));
-        date.setFont(date_font);
-        pane.getChildren().add(date);
-
-        chat_log.applyCss();
-        chat_log.layout();
-
-        pane.applyCss();
-        pane.layout();*/
-
         LogMessage logMessage = new LogMessage(message);
         logMessage.show(chat_log);
-
-        label.setLayoutY(nme.getHeight()-4);
-        pane.setPrefHeight(label.getHeight()+nme.getHeight());
-
-        if(pane.getWidth() < nme.getWidth()+date.getWidth()+16)
-            pane.setPrefWidth(nme.getWidth()+date.getWidth()+16);
-
-        if(pane.getPrefWidth() != -1)
-            date.setLayoutX(pane.getPrefWidth()-date.getWidth()-8);
-        else
-            date.setLayoutX(pane.getWidth()-date.getWidth()-8);
-
-        pane.setLayoutY(size);
-        pane.setLayoutX(4);
-        size += pane.getPrefHeight()+8;
-
-
     }
 
-    public void consoleMe(String text){
-        Pane pane = new Pane();
-        chat_log.getChildren().add(pane);
-        pane.setStyle("-fx-background-color: #86e0fd; -fx-background-radius: 8;");
-
-        Label label = new Label("\t"+text);
-        label.setWrapText(true);
-        label.setMaxWidth(chat_log.getPrefWidth()/6*5);
-        pane.getChildren().add(label);
-        label.setFont(msg_font);
-        label.setPadding(new Insets(3, 3, 3, 3));
-
-        Label date = new Label(format.format(new Date()));
-        date.setTextFill(Color.valueOf("#515151"));
-        date.setPadding(new Insets(3, 3, 3, 3));
-        date.setFont(date_font);
-        pane.getChildren().add(date);
-
-        pane.applyCss();
-        pane.layout();
-
-        System.out.println(label.getHeight());
-        pane.setPrefHeight(label.getHeight());
-
-        pane.setLayoutX(chat_log.getPrefWidth()-label.getWidth()-8);
-        pane.setLayoutY(size);
-        size += label.getHeight()+8;
-
-        chat_scroll.setVvalue(1.0d);
+    public void consoleMe(Message message){
+        LogMessage logMessage = new LogMessage(message);
+        logMessage.show(chat_log);
     }
 
     public void setMainApp(MainApp main){

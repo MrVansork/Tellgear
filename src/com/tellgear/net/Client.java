@@ -87,12 +87,12 @@ public class Client extends Thread{
 
                     if(msg.type.equals("message")){
                         if(msg.sender.equals(UserOverviewController.USERNAME)){
-                            Platform.runLater(() -> uoc.consoleMe(Utilities.decrypt(msg.content)));
+                            Platform.runLater(() -> uoc.consoleMe(msg));
                         }else{
                             if(msg.recipient.equals(UserOverviewController.USERNAME)){
-                                Platform.runLater(() -> uoc.consoleOther(Utilities.decrypt(msg.content), msg.sender, User.findUser(msg.sender).getColor()));
+                                Platform.runLater(() -> uoc.consoleOther(msg));
                             }else if(msg.recipient.equals("!!##ALL")){
-                                Platform.runLater(() -> uoc.consoleOther(Utilities.decrypt(msg.content), msg.sender, User.findUser(msg.sender).getColor()));
+                                Platform.runLater(() -> uoc.consoleOther(msg));
                             }
                         }
                     }
